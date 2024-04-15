@@ -199,7 +199,7 @@
         "kind": 5,
         "importPath": "poseDetection",
         "description": "poseDetection",
-        "peekOfCode": "mp_pose = mp.solutions.pose\nmp_draw = mp.solutions.drawing_utils\npose = mp_pose.Pose()\n# Define landmark indices and their corresponding names\nlandmark_mapping = {\n    11: \"LEFT SHOULDER\",\n    12: \"RIGHT SHOULDER\",\n    13: \"LEFT ELBOW\",\n    14: \"RIGHT ELBOW\",\n    15: \"LEFT WRIST\",",
+        "peekOfCode": "mp_pose = mp.solutions.pose\nmp_draw = mp.solutions.drawing_utils\npose = mp_pose.Pose()\n# Define landmark indices and their corresponding names\nlandmark_mapping = {\n    11: \"LEFT SHOULDER\",\n#    12: \"RIGHT SHOULDER\",\n    13: \"LEFT ELBOW\",\n#    14: \"RIGHT ELBOW\",\n#    15: \"LEFT WRIST\",",
         "detail": "poseDetection",
         "documentation": {}
     },
@@ -208,7 +208,7 @@
         "kind": 5,
         "importPath": "poseDetection",
         "description": "poseDetection",
-        "peekOfCode": "mp_draw = mp.solutions.drawing_utils\npose = mp_pose.Pose()\n# Define landmark indices and their corresponding names\nlandmark_mapping = {\n    11: \"LEFT SHOULDER\",\n    12: \"RIGHT SHOULDER\",\n    13: \"LEFT ELBOW\",\n    14: \"RIGHT ELBOW\",\n    15: \"LEFT WRIST\",\n    16: \"RIGHT WRIST\"",
+        "peekOfCode": "mp_draw = mp.solutions.drawing_utils\npose = mp_pose.Pose()\n# Define landmark indices and their corresponding names\nlandmark_mapping = {\n    11: \"LEFT SHOULDER\",\n#    12: \"RIGHT SHOULDER\",\n    13: \"LEFT ELBOW\",\n#    14: \"RIGHT ELBOW\",\n#    15: \"LEFT WRIST\",\n#    16: \"RIGHT WRIST\"",
         "detail": "poseDetection",
         "documentation": {}
     },
@@ -217,7 +217,7 @@
         "kind": 5,
         "importPath": "poseDetection",
         "description": "poseDetection",
-        "peekOfCode": "pose = mp_pose.Pose()\n# Define landmark indices and their corresponding names\nlandmark_mapping = {\n    11: \"LEFT SHOULDER\",\n    12: \"RIGHT SHOULDER\",\n    13: \"LEFT ELBOW\",\n    14: \"RIGHT ELBOW\",\n    15: \"LEFT WRIST\",\n    16: \"RIGHT WRIST\"\n}",
+        "peekOfCode": "pose = mp_pose.Pose()\n# Define landmark indices and their corresponding names\nlandmark_mapping = {\n    11: \"LEFT SHOULDER\",\n#    12: \"RIGHT SHOULDER\",\n    13: \"LEFT ELBOW\",\n#    14: \"RIGHT ELBOW\",\n#    15: \"LEFT WRIST\",\n#    16: \"RIGHT WRIST\"\n}",
         "detail": "poseDetection",
         "documentation": {}
     },
@@ -226,7 +226,7 @@
         "kind": 5,
         "importPath": "poseDetection",
         "description": "poseDetection",
-        "peekOfCode": "landmark_mapping = {\n    11: \"LEFT SHOULDER\",\n    12: \"RIGHT SHOULDER\",\n    13: \"LEFT ELBOW\",\n    14: \"RIGHT ELBOW\",\n    15: \"LEFT WRIST\",\n    16: \"RIGHT WRIST\"\n}\nconnections = [\n    (11, 13),  # Left shoulder to left elbow",
+        "peekOfCode": "landmark_mapping = {\n    11: \"LEFT SHOULDER\",\n#    12: \"RIGHT SHOULDER\",\n    13: \"LEFT ELBOW\",\n#    14: \"RIGHT ELBOW\",\n#    15: \"LEFT WRIST\",\n#    16: \"RIGHT WRIST\"\n}\nconnections = [\n    (11, 13)  # Left shoulder to left elbow",
         "detail": "poseDetection",
         "documentation": {}
     },
@@ -235,7 +235,7 @@
         "kind": 5,
         "importPath": "poseDetection",
         "description": "poseDetection",
-        "peekOfCode": "connections = [\n    (11, 13),  # Left shoulder to left elbow\n    (13, 15),  # Left elbow to left wrist\n    (12, 14),  # Right shoulder to right elbow\n    (14, 16),  # Right elbow to right wrist\n    (11, 12),  # Left shoulder to right shoulder\n]\n# Take video input for pose detection\ncap = cv2.VideoCapture(0)  # You can put here video of your choice (\"sampleVideo.mp4\")\n# Read each frame/image from capture object",
+        "peekOfCode": "connections = [\n    (11, 13)  # Left shoulder to left elbow\n#    (13, 15),  # Left elbow to left wrist\n#    (12, 14),  # Right shoulder to right elbow\n#    (14, 16),  # Right elbow to right wrist\n#    (11, 12),  # Left shoulder to right shoulder\n]\n# Take video input for pose detection\ncap = cv2.VideoCapture(0)  # You can put here video of your choice (\"sampleVideo.mp4\")\n# Read each frame/image from capture object",
         "detail": "poseDetection",
         "documentation": {}
     },

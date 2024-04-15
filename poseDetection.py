@@ -10,19 +10,19 @@ pose = mp_pose.Pose()
 # Define landmark indices and their corresponding names
 landmark_mapping = {
     11: "LEFT SHOULDER",
-    12: "RIGHT SHOULDER",
+#    12: "RIGHT SHOULDER",
     13: "LEFT ELBOW",
-    14: "RIGHT ELBOW",
-    15: "LEFT WRIST",
-    16: "RIGHT WRIST"
+#    14: "RIGHT ELBOW",
+#    15: "LEFT WRIST",
+#    16: "RIGHT WRIST"
 }
 
 connections = [
-    (11, 13),  # Left shoulder to left elbow
-    (13, 15),  # Left elbow to left wrist
-    (12, 14),  # Right shoulder to right elbow
-    (14, 16),  # Right elbow to right wrist
-    (11, 12),  # Left shoulder to right shoulder
+    (11, 13)  # Left shoulder to left elbow
+#    (13, 15),  # Left elbow to left wrist
+#    (12, 14),  # Right shoulder to right elbow
+#    (14, 16),  # Right elbow to right wrist
+#    (11, 12),  # Left shoulder to right shoulder
 ]
 # Take video input for pose detection
 cap = cv2.VideoCapture(0)  # You can put here video of your choice ("sampleVideo.mp4")
@@ -52,11 +52,19 @@ while True:
         for connection in connections:
             start_landmark = results.pose_landmarks.landmark[connection[0]]
             end_landmark = results.pose_landmarks.landmark[connection[1]]
+            
             start_x = int(start_landmark.x * img.shape[1])
             start_y = int(start_landmark.y * img.shape[0])
             end_x = int(end_landmark.x * img.shape[1])
             end_y = int(end_landmark.y * img.shape[0])
+            
+            angle = np.degrees(np.arctan2(end_y - start_y, end_x - start_x))
+            angle = angle + 360 if angle < 0 else angle
+            print("Angle is : {}".format(angle))
+            
             cv2.line(img, (start_x, start_y), (end_x, end_y), (0, 255, 0), 4)
+            
+        
     except:
         print("Detection is lost")
     print()
