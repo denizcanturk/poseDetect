@@ -60,7 +60,7 @@ while True:
             
             angle = np.degrees(np.arctan2(end_y - start_y, end_x - start_x))
             angle = angle + 360 if angle < 0 else angle
-            print("{}\t- {}\t: {}".format(landmark_mapping.get(connection[0]), landmark_mapping.get(connection[1]),angle))
+            print("{}\t- {}\t: {}".format(landmark_mapping.get(connection[0]), landmark_mapping.get(connection[1]),angle).expandtabs(9))
             #(landmark_mapping.get(connection[0]), landmark_mapping.get(connection[1]))
             cv2.line(img, (start_x, start_y), (end_x, end_y), (0, 255, 0), 4)
             
