@@ -1,0 +1,278 @@
+[
+    {
+        "label": "*",
+        "importPath": "utils_v2",
+        "description": "utils_v2",
+        "isExtraImport": true,
+        "detail": "utils_v2",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "cv2",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "cv2",
+        "description": "cv2",
+        "detail": "cv2",
+        "documentation": {}
+    },
+    {
+        "label": "argparse",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "argparse",
+        "description": "argparse",
+        "detail": "argparse",
+        "documentation": {}
+    },
+    {
+        "label": "deque",
+        "importPath": "collections",
+        "description": "collections",
+        "isExtraImport": true,
+        "detail": "collections",
+        "documentation": {}
+    },
+    {
+        "label": "deque",
+        "importPath": "collections",
+        "description": "collections",
+        "isExtraImport": true,
+        "detail": "collections",
+        "documentation": {}
+    },
+    {
+        "label": "mediapipe",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "mediapipe",
+        "description": "mediapipe",
+        "detail": "mediapipe",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "2",
+        "description": "2",
+        "peekOfCode": "def main():\n    hands = mp_hands.Hands(\n        min_detection_confidence=0.7, min_tracking_confidence=0.7)\n    hand_landmark_drawing_spec = mp_drawing.DrawingSpec(thickness=5, circle_radius=5)\n    hand_connection_drawing_spec = mp_drawing.DrawingSpec(thickness=10, circle_radius=10)\n    cap = cv2.VideoCapture(0)\n    pts = deque(maxlen=64)\n    while cap.isOpened():\n        idx_to_coordinates = {}\n        ret, image = cap.read()",
+        "detail": "2",
+        "documentation": {}
+    },
+    {
+        "label": "mp_drawing",
+        "kind": 5,
+        "importPath": "2",
+        "description": "2",
+        "peekOfCode": "mp_drawing = mp.solutions.drawing_utils\nmp_hands = mp.solutions.hands\ndef main():\n    hands = mp_hands.Hands(\n        min_detection_confidence=0.7, min_tracking_confidence=0.7)\n    hand_landmark_drawing_spec = mp_drawing.DrawingSpec(thickness=5, circle_radius=5)\n    hand_connection_drawing_spec = mp_drawing.DrawingSpec(thickness=10, circle_radius=10)\n    cap = cv2.VideoCapture(0)\n    pts = deque(maxlen=64)\n    while cap.isOpened():",
+        "detail": "2",
+        "documentation": {}
+    },
+    {
+        "label": "mp_hands",
+        "kind": 5,
+        "importPath": "2",
+        "description": "2",
+        "peekOfCode": "mp_hands = mp.solutions.hands\ndef main():\n    hands = mp_hands.Hands(\n        min_detection_confidence=0.7, min_tracking_confidence=0.7)\n    hand_landmark_drawing_spec = mp_drawing.DrawingSpec(thickness=5, circle_radius=5)\n    hand_connection_drawing_spec = mp_drawing.DrawingSpec(thickness=10, circle_radius=10)\n    cap = cv2.VideoCapture(0)\n    pts = deque(maxlen=64)\n    while cap.isOpened():\n        idx_to_coordinates = {}",
+        "detail": "2",
+        "documentation": {}
+    },
+    {
+        "label": "pts",
+        "kind": 5,
+        "importPath": "3",
+        "description": "3",
+        "peekOfCode": "pts = deque(maxlen=64)\nLower_green = np.array([110,50,50])\nUpper_green = np.array([130,255,255])\nwhile True:\n\tret, img=cap.read()\n\thsv=cv2.cvtColor(img,cv2.COLOR_BGR2HSV)\n\tkernel=np.ones((5,5),np.uint8)\n\tmask=cv2.inRange(hsv,Lower_green,Upper_green)\n\tmask = cv2.erode(mask, kernel, iterations=2)\n\tmask=cv2.morphologyEx(mask,cv2.MORPH_OPEN,kernel)",
+        "detail": "3",
+        "documentation": {}
+    },
+    {
+        "label": "Lower_green",
+        "kind": 5,
+        "importPath": "3",
+        "description": "3",
+        "peekOfCode": "Lower_green = np.array([110,50,50])\nUpper_green = np.array([130,255,255])\nwhile True:\n\tret, img=cap.read()\n\thsv=cv2.cvtColor(img,cv2.COLOR_BGR2HSV)\n\tkernel=np.ones((5,5),np.uint8)\n\tmask=cv2.inRange(hsv,Lower_green,Upper_green)\n\tmask = cv2.erode(mask, kernel, iterations=2)\n\tmask=cv2.morphologyEx(mask,cv2.MORPH_OPEN,kernel)\n\t#mask=cv2.morphologyEx(mask,cv2.MORPH_CLOSE,kernel)",
+        "detail": "3",
+        "documentation": {}
+    },
+    {
+        "label": "Upper_green",
+        "kind": 5,
+        "importPath": "3",
+        "description": "3",
+        "peekOfCode": "Upper_green = np.array([130,255,255])\nwhile True:\n\tret, img=cap.read()\n\thsv=cv2.cvtColor(img,cv2.COLOR_BGR2HSV)\n\tkernel=np.ones((5,5),np.uint8)\n\tmask=cv2.inRange(hsv,Lower_green,Upper_green)\n\tmask = cv2.erode(mask, kernel, iterations=2)\n\tmask=cv2.morphologyEx(mask,cv2.MORPH_OPEN,kernel)\n\t#mask=cv2.morphologyEx(mask,cv2.MORPH_CLOSE,kernel)\n\tmask = cv2.dilate(mask, kernel, iterations=1)",
+        "detail": "3",
+        "documentation": {}
+    },
+    {
+        "label": "\tmask",
+        "kind": 5,
+        "importPath": "3",
+        "description": "3",
+        "peekOfCode": "\tmask = cv2.erode(mask, kernel, iterations=2)\n\tmask=cv2.morphologyEx(mask,cv2.MORPH_OPEN,kernel)\n\t#mask=cv2.morphologyEx(mask,cv2.MORPH_CLOSE,kernel)\n\tmask = cv2.dilate(mask, kernel, iterations=1)\n\tres=cv2.bitwise_and(img,img,mask=mask)\n\tcnts,heir=cv2.findContours(mask.copy(),cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)[-2:]\n\tcenter = None\n\tif len(cnts) > 0:\n\t\tc = max(cnts, key=cv2.contourArea)\n\t\t((x, y), radius) = cv2.minEnclosingCircle(c)",
+        "detail": "3",
+        "documentation": {}
+    },
+    {
+        "label": "\tmask",
+        "kind": 5,
+        "importPath": "3",
+        "description": "3",
+        "peekOfCode": "\tmask = cv2.dilate(mask, kernel, iterations=1)\n\tres=cv2.bitwise_and(img,img,mask=mask)\n\tcnts,heir=cv2.findContours(mask.copy(),cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)[-2:]\n\tcenter = None\n\tif len(cnts) > 0:\n\t\tc = max(cnts, key=cv2.contourArea)\n\t\t((x, y), radius) = cv2.minEnclosingCircle(c)\n\t\tM = cv2.moments(c)\n\t\tcenter = (int(M[\"m10\"] / M[\"m00\"]), int(M[\"m01\"] / M[\"m00\"]))\n\t\tif radius > 5:",
+        "detail": "3",
+        "documentation": {}
+    },
+    {
+        "label": "\tcenter",
+        "kind": 5,
+        "importPath": "3",
+        "description": "3",
+        "peekOfCode": "\tcenter = None\n\tif len(cnts) > 0:\n\t\tc = max(cnts, key=cv2.contourArea)\n\t\t((x, y), radius) = cv2.minEnclosingCircle(c)\n\t\tM = cv2.moments(c)\n\t\tcenter = (int(M[\"m10\"] / M[\"m00\"]), int(M[\"m01\"] / M[\"m00\"]))\n\t\tif radius > 5:\n\t\t\tcv2.circle(img, (int(x), int(y)), int(radius),(0, 255, 255), 2)\n\t\t\tcv2.circle(img, center, 5, (0, 0, 255), -1)\n\tpts.appendleft(center)",
+        "detail": "3",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tc",
+        "kind": 5,
+        "importPath": "3",
+        "description": "3",
+        "peekOfCode": "\t\tc = max(cnts, key=cv2.contourArea)\n\t\t((x, y), radius) = cv2.minEnclosingCircle(c)\n\t\tM = cv2.moments(c)\n\t\tcenter = (int(M[\"m10\"] / M[\"m00\"]), int(M[\"m01\"] / M[\"m00\"]))\n\t\tif radius > 5:\n\t\t\tcv2.circle(img, (int(x), int(y)), int(radius),(0, 255, 255), 2)\n\t\t\tcv2.circle(img, center, 5, (0, 0, 255), -1)\n\tpts.appendleft(center)\n\tfor i in range (1,len(pts)):\n\t\tif pts[i-1]is None or pts[i] is None:",
+        "detail": "3",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tM",
+        "kind": 5,
+        "importPath": "3",
+        "description": "3",
+        "peekOfCode": "\t\tM = cv2.moments(c)\n\t\tcenter = (int(M[\"m10\"] / M[\"m00\"]), int(M[\"m01\"] / M[\"m00\"]))\n\t\tif radius > 5:\n\t\t\tcv2.circle(img, (int(x), int(y)), int(radius),(0, 255, 255), 2)\n\t\t\tcv2.circle(img, center, 5, (0, 0, 255), -1)\n\tpts.appendleft(center)\n\tfor i in range (1,len(pts)):\n\t\tif pts[i-1]is None or pts[i] is None:\n\t\t\tcontinue\n\t\tthick = int(np.sqrt(len(pts) / float(i + 1)) * 2.5)",
+        "detail": "3",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tcenter",
+        "kind": 5,
+        "importPath": "3",
+        "description": "3",
+        "peekOfCode": "\t\tcenter = (int(M[\"m10\"] / M[\"m00\"]), int(M[\"m01\"] / M[\"m00\"]))\n\t\tif radius > 5:\n\t\t\tcv2.circle(img, (int(x), int(y)), int(radius),(0, 255, 255), 2)\n\t\t\tcv2.circle(img, center, 5, (0, 0, 255), -1)\n\tpts.appendleft(center)\n\tfor i in range (1,len(pts)):\n\t\tif pts[i-1]is None or pts[i] is None:\n\t\t\tcontinue\n\t\tthick = int(np.sqrt(len(pts) / float(i + 1)) * 2.5)\n\t\tcv2.line(img, pts[i-1],pts[i],(0,0,225),thick)",
+        "detail": "3",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tthick",
+        "kind": 5,
+        "importPath": "3",
+        "description": "3",
+        "peekOfCode": "\t\tthick = int(np.sqrt(len(pts) / float(i + 1)) * 2.5)\n\t\tcv2.line(img, pts[i-1],pts[i],(0,0,225),thick)\n\tcv2.imshow(\"Frame\", img)\n\tcv2.imshow(\"mask\",mask)\n\tcv2.imshow(\"res\",res)\n\tk=cv2.waitKey(30) & 0xFF\n\tif k==32: \n\t\tbreak\n# cleanup the camera and close any open windows\ncap.release()",
+        "detail": "3",
+        "documentation": {}
+    },
+    {
+        "label": "poseDetector",
+        "kind": 6,
+        "importPath": "4+",
+        "description": "4+",
+        "peekOfCode": "class poseDetector():\n    def __init__(self, mode=False, complex=1, smooth_landmarks=True, segmentation=True, smooth_segmentation=True,\n                 detectionCon=0.5, trackCon=0.5):\n        self.mode = mode\n        self.complex = complex\n        self.smooth_landmarks = smooth_landmarks\n        self.segmentation = segmentation\n        self.smooth_segmentation = smooth_segmentation\n        self.detectionCon = detectionCon\n        self.trackCon = trackCon",
+        "detail": "4+",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "4+",
+        "description": "4+",
+        "peekOfCode": "def main():\n    cap = cv2.VideoCapture(\"..//assets//videos//v4.mp4\")\n    detector = poseDetector()\n    while True:\n        success, img = cap.read()\n        img = detector.findPose(img)\n        cv2.imshow(\"Image\", img)\n        cv2.waitKey(1)\nif __name__ == \"__main__\":\n    main()",
+        "detail": "4+",
+        "documentation": {}
+    },
+    {
+        "label": "mp_pose",
+        "kind": 5,
+        "importPath": "poseDetection",
+        "description": "poseDetection",
+        "peekOfCode": "mp_pose = mp.solutions.pose\nmp_draw = mp.solutions.drawing_utils\npose = mp_pose.Pose()\n# Define landmark indices and their corresponding names\nlandmark_mapping = {\n    11: \"LEFT SHOULDER\",\n    12: \"RIGHT SHOULDER\",\n    13: \"LEFT ELBOW\",\n    14: \"RIGHT ELBOW\",\n    15: \"LEFT WRIST\",",
+        "detail": "poseDetection",
+        "documentation": {}
+    },
+    {
+        "label": "mp_draw",
+        "kind": 5,
+        "importPath": "poseDetection",
+        "description": "poseDetection",
+        "peekOfCode": "mp_draw = mp.solutions.drawing_utils\npose = mp_pose.Pose()\n# Define landmark indices and their corresponding names\nlandmark_mapping = {\n    11: \"LEFT SHOULDER\",\n    12: \"RIGHT SHOULDER\",\n    13: \"LEFT ELBOW\",\n    14: \"RIGHT ELBOW\",\n    15: \"LEFT WRIST\",\n    16: \"RIGHT WRIST\"",
+        "detail": "poseDetection",
+        "documentation": {}
+    },
+    {
+        "label": "pose",
+        "kind": 5,
+        "importPath": "poseDetection",
+        "description": "poseDetection",
+        "peekOfCode": "pose = mp_pose.Pose()\n# Define landmark indices and their corresponding names\nlandmark_mapping = {\n    11: \"LEFT SHOULDER\",\n    12: \"RIGHT SHOULDER\",\n    13: \"LEFT ELBOW\",\n    14: \"RIGHT ELBOW\",\n    15: \"LEFT WRIST\",\n    16: \"RIGHT WRIST\"\n}",
+        "detail": "poseDetection",
+        "documentation": {}
+    },
+    {
+        "label": "landmark_mapping",
+        "kind": 5,
+        "importPath": "poseDetection",
+        "description": "poseDetection",
+        "peekOfCode": "landmark_mapping = {\n    11: \"LEFT SHOULDER\",\n    12: \"RIGHT SHOULDER\",\n    13: \"LEFT ELBOW\",\n    14: \"RIGHT ELBOW\",\n    15: \"LEFT WRIST\",\n    16: \"RIGHT WRIST\"\n}\nconnections = [\n    (11, 13),  # Left shoulder to left elbow",
+        "detail": "poseDetection",
+        "documentation": {}
+    },
+    {
+        "label": "connections",
+        "kind": 5,
+        "importPath": "poseDetection",
+        "description": "poseDetection",
+        "peekOfCode": "connections = [\n    (11, 13),  # Left shoulder to left elbow\n    (13, 15),  # Left elbow to left wrist\n    (12, 14),  # Right shoulder to right elbow\n    (14, 16),  # Right elbow to right wrist\n    (11, 12),  # Left shoulder to right shoulder\n]\n# Take video input for pose detection\ncap = cv2.VideoCapture(0)  # You can put here video of your choice (\"sampleVideo.mp4\")\n# Read each frame/image from capture object",
+        "detail": "poseDetection",
+        "documentation": {}
+    },
+    {
+        "label": "cap",
+        "kind": 5,
+        "importPath": "poseDetection",
+        "description": "poseDetection",
+        "peekOfCode": "cap = cv2.VideoCapture(0)  # You can put here video of your choice (\"sampleVideo.mp4\")\n# Read each frame/image from capture object\nwhile True:\n    ret, img = cap.read()\n    # Resize image/frame so we can accommodate it on our screen\n    img = cv2.resize(img, (600, 400))\n    # Do Pose detection\n    results = pose.process(img)\n    if results is None:\n        continue",
+        "detail": "poseDetection",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "utils_v2",
+        "description": "utils_v2",
+        "peekOfCode": "def main():\n    hands = mp_hands.Hands(\n        min_detection_confidence=0.7, min_tracking_confidence=0.7)\n    hand_landmark_drawing_spec = mp_drawing.DrawingSpec(thickness=5, circle_radius=5)\n    hand_connection_drawing_spec = mp_drawing.DrawingSpec(thickness=10, circle_radius=10)\n    cap = cv2.VideoCapture(0)\n    pts = deque(maxlen=64)\n    while cap.isOpened():\n        idx_to_coordinates = {}\n        ret, image = cap.read()",
+        "detail": "utils_v2",
+        "documentation": {}
+    },
+    {
+        "label": "mp_drawing",
+        "kind": 5,
+        "importPath": "utils_v2",
+        "description": "utils_v2",
+        "peekOfCode": "mp_drawing = mp.solutions.drawing_utils\nmp_hands = mp.solutions.hands\ndef main():\n    hands = mp_hands.Hands(\n        min_detection_confidence=0.7, min_tracking_confidence=0.7)\n    hand_landmark_drawing_spec = mp_drawing.DrawingSpec(thickness=5, circle_radius=5)\n    hand_connection_drawing_spec = mp_drawing.DrawingSpec(thickness=10, circle_radius=10)\n    cap = cv2.VideoCapture(0)\n    pts = deque(maxlen=64)\n    while cap.isOpened():",
+        "detail": "utils_v2",
+        "documentation": {}
+    },
+    {
+        "label": "mp_hands",
+        "kind": 5,
+        "importPath": "utils_v2",
+        "description": "utils_v2",
+        "peekOfCode": "mp_hands = mp.solutions.hands\ndef main():\n    hands = mp_hands.Hands(\n        min_detection_confidence=0.7, min_tracking_confidence=0.7)\n    hand_landmark_drawing_spec = mp_drawing.DrawingSpec(thickness=5, circle_radius=5)\n    hand_connection_drawing_spec = mp_drawing.DrawingSpec(thickness=10, circle_radius=10)\n    cap = cv2.VideoCapture(0)\n    pts = deque(maxlen=64)\n    while cap.isOpened():\n        idx_to_coordinates = {}",
+        "detail": "utils_v2",
+        "documentation": {}
+    }
+]
