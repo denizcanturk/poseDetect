@@ -66,7 +66,7 @@ while True:
             cv2.line(img, (start_x, start_y), (end_x, end_y), (0, 255, 0), 4)
             
         
-    except:
+    except:  # noqa: E722
         print("Detection is lost")
     print()
 
