@@ -57,7 +57,7 @@ with mp_hands.Hands(
             y = int(landmark.y * image.shape[0])
             cv2.circle(image, (x, y), 6, (0, 0, 255), 6)
             # Print landmark name and coordinates
-            #print(f"{landmark_name}\t: ({x}, {y})")
+            print(f"{landmark_name}\t: ({x}, {y})")
             
             # Draw connections
         for connection in connections:
