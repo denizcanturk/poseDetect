@@ -5,6 +5,7 @@ import numpy as np
 # Initialize MediaPipe pose solution
 mp_pose = mp.solutions.pose
 mp_draw = mp.solutions.drawing_utils
+
 pose = mp_pose.Pose()
 
 # Define landmark indices and their corresponding names
