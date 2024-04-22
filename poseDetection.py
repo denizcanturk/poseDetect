@@ -47,7 +47,8 @@ while True:
             y = int(landmark.y * img.shape[0])
             cv2.circle(img, (x, y), 6, (0, 0, 255), 6)
             # Print landmark name and coordinates
-            print(f"{landmark_name}\t: ({x}, {y})")
+            if landmark_name == "LEFT SHOULDER" or landmark_name == "LEFT ELBOW":
+                print(f"{landmark_name}\t: ({x}, {y})")
             
             # Draw connections
         for connection in connections:
@@ -61,8 +62,8 @@ while True:
             
             angle = np.degrees(np.arctan2(end_y - start_y, end_x - start_x))
             angle = angle + 360 if angle < 0 else angle
-            print("{}\t- {}\t: {}".format(landmark_mapping.get(connection[0]), landmark_mapping.get(connection[1]),angle).expandtabs(9))
-            #(landmark_mapping.get(connection[0]), landmark_mapping.get(connection[1]))
+            if landmark_mapping.get(connection[0]) == "LEFT SHOULDER" and landmark_mapping.get(connection[1]) == "LEFT ELBOW":
+                print("{}\t- {}\t: {}".format(landmark_mapping.get(connection[0]), landmark_mapping.get(connection[1]),angle).expandtabs(9))
             cv2.line(img, (start_x, start_y), (end_x, end_y), (0, 255, 0), 4)
             
         
@@ -72,26 +73,6 @@ while True:
 
     # Display pose on original video/live stream
     cv2.imshow("Pose Estimation", img)
-
-    # # Extract and draw pose on plain white image
-    # h, w, c = img.shape   # get shape of original frame
-    # #opImg = np.zeros([h, w, c], dtype=np.uint8)  # create blank image with original frame size
-    # #opImg.fill(255)  # set white background. put 0 if you want to make it black
-
-
-    # try:
-    # # Draw specific landmarks on the blank image
-    #     for landmark_idx, landmark_name in landmark_mapping.items():
-    #         landmark = results.pose_landmarks.landmark[landmark_idx]
-    #         # Draw the landmark on the blank image
-    #         x = int(landmark.x * w)
-    #         y = int(landmark.y * h)
-    #         cv2.circle(opImg, (x, y), 2, (255, 0, 0), 4)
-    # except:
-    #     print("Detection is lost")
-        
-    # # Display extracted pose on blank image
-    # cv2.imshow("Extracted Pose", opImg)
 
     # Exit loop if any key is pressed
     if cv2.waitKey(1) & 0xFF == ord('q'):
