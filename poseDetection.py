@@ -27,12 +27,16 @@ connections = [
 ]
 # Take video input for pose detection
 cap = cv2.VideoCapture(0)  # You can put here video of your choice ("sampleVideo.mp4")
+desiredImageHeight = 400
+desiredImageWidth = 640
+center_x = desiredImageWidth // 2
+center_y = desiredImageHeight // 2
 
 # Read each frame/image from capture object
 while True:
     ret, img = cap.read()
     # Resize image/frame so we can accommodate it on our screen
-    img = cv2.resize(img, (600, 400))
+    img = cv2.resize(img, (desiredImageWidth, desiredImageHeight))
 
     # Do Pose detection
     results = pose.process(img)
