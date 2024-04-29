@@ -3,6 +3,7 @@ import mediapipe as mp
 import numpy as np
 
 #-----------------------------------------------
+
 class RollingAverageFilter:
     def __init__(self, window_size):
         self.window_size = window_size
@@ -17,6 +18,7 @@ class RollingAverageFilter:
         if len(self.values) == 0:
             return 0  # Return 0 if there are no values in the window
         return sum(self.values) / len(self.values)
+    
 #-----------------------------------------------
 
 class PoseDetector:
@@ -54,7 +56,7 @@ class PoseDetector:
         # Draw landmarks and connections
         try:
             #Putting Landmark with red circles
-            for landmark_idx, landmark_name in self.landmark_mapping.items():
+            for landmark_idx, _ in self.landmark_mapping.items():
                 landmark = results.pose_landmarks.landmark[landmark_idx]
                 x = int(landmark.x * img.shape[1])
                 y = int(landmark.y * img.shape[0])
@@ -124,3 +126,4 @@ def main():
     # Release video capture and close all windows
     cap.release()
     cv2.destroyAllWindows()
+
