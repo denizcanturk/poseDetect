@@ -1,0 +1,6 @@
+- condition for detecting angle for each connection
+- Calculating them seperately
+- sending them over Serial
+- Reading the with arduino over Serial
+- parsing them as necessary
+-
