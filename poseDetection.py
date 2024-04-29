@@ -32,6 +32,15 @@ desiredImageWidth = 640
 center_x = desiredImageWidth // 2
 center_y = desiredImageHeight // 2
 
+def normalizeCoords(x, y): 
+    return x -center_x, y-center_y
+
+def mapAngle(angle):
+    mappedAngle = angle-270
+    mappedAngle %=360
+    return mappedAngle
+
+
 # Read each frame/image from capture object
 while True:
     ret, img = cap.read()
@@ -63,12 +72,13 @@ while True:
             start_y = int(start_landmark.y * img.shape[0])
             end_x = int(end_landmark.x * img.shape[1])
             end_y = int(end_landmark.y * img.shape[0])
-            
+            cv2.line(img, (start_x, start_y), (end_x, end_y), (0, 255, 0), 4)
+
             angle = np.degrees(np.arctan2(end_y - start_y, end_x - start_x))
             angle = angle + 360 if angle < 0 else angle
             if landmark_mapping.get(connection[0]) == "LEFT SHOULDER" and landmark_mapping.get(connection[1]) == "LEFT ELBOW":
-                print("{}\t- {}\t: {}".format(landmark_mapping.get(connection[0]), landmark_mapping.get(connection[1]),angle).expandtabs(9))
-            cv2.line(img, (start_x, start_y), (end_x, end_y), (0, 255, 0), 4)
+                print("{}\t- {}\t: {}".format(landmark_mapping.get(connection[0]), landmark_mapping.get(connection[1]),mapAngle(angle)).expandtabs(9))
+            
             
         
     except:  # noqa: E722
