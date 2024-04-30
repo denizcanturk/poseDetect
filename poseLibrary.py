@@ -91,7 +91,7 @@ class PoseDetector:
 
                 angle = np.degrees(np.arctan2(end_y - start_y, end_x - start_x))
                 angle = angle + 360 if angle < 0 else angle
-                mapped_angle = self.normalizeAngle(angle)
+                mapped_angle = angle #self.normalizeAngle(angle)
                 
                 # Apply rolling average filter to joint angles based on landmark names
                 key = (start_landmark_name, end_landmark_name)
