@@ -47,12 +47,14 @@ class PoseDetector:
         self.leftElbowToWristMvgAvg = RollingAverageFilter(window_size)
         self.rightShoulderToElbowMvgAvg = RollingAverageFilter(window_size)
         self.righttElbowToWristMvgAvg = RollingAverageFilter(window_size)
+        self.shoulderToShoulderMvgAvg = RollingAverageFilter(window_size)
 
         self.filter_mapping = {
             ("LEFT SHOULDER", "LEFT ELBOW"): self.leftShoulderToElbowMvgAvg,
             ("LEFT ELBOW", "LEFT WRIST"): self.leftElbowToWristMvgAvg,
             ("RIGHT SHOULDER", "RIGHT ELBOW"): self.rightShoulderToElbowMvgAvg,
-            ("RIGHT ELBOW", "RIGHT WRIST"): self.righttElbowToWristMvgAvg
+            ("RIGHT ELBOW", "RIGHT WRIST"): self.righttElbowToWristMvgAvg,
+            ("LEFT SHOULDER", "RIGHT SHOULDER"): self.shoulderToShoulderMvgAvg
         }
     def normalizeAngle(self, angle:float)->int: #angle_range:tuple=(270,90)
         mappedAngle = angle - 360
@@ -88,7 +90,7 @@ class PoseDetector:
                                                 int(end_landmark.x * img.shape[1]), int(end_landmark.y * img.shape[0])
                 
                 cv2.line(img, (start_x, start_y), (end_x, end_y), (0, 255, 0), 4)
-
+                slopeOfLine = (end_y - start_y) / (end_x - start_x)
                 angle = np.degrees(np.arctan2(end_y - start_y, end_x - start_x))
                 angle = angle + 360 if angle < 0 else angle
                 mapped_angle = angle #self.normalizeAngle(angle)
@@ -98,10 +100,8 @@ class PoseDetector:
                 if key in self.filter_mapping:
                     self.filter_mapping[key].add_value(mapped_angle)
                     filtered_angle = self.filter_mapping[key].get_filtered_value()
-                    print("{}\t- {}\t: {}".format(start_landmark_name, end_landmark_name, filtered_angle).expandtabs(9))
-                    self.angleContainer.append(filtered_angle)
-            self.angleContainer[1] = self.angleContainer[1]-self.angleContainer[0]
-            self.angleContainer[3] = self.angleContainer[3]-self.angleContainer[2]
+                    print("{}\t- {}\t: {}".format(start_landmark_name, end_landmark_name, [filtered_angle,slopeOfLine]).expandtabs(9))
+                    self.angleContainer.append([filtered_angle,slopeOfLine])
             print(self.angleContainer)
         
                 
