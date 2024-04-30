@@ -1,5 +1,6 @@
-- condition for detecting angle for each connection
-- Calculating them seperately
++ condition for detecting angle for each connection
++ Calculating them seperately
+- Angles have some issues like elbow angle is moving with the change in the shoulder angle. need to way to neutralize the angle change.
 - sending them over Serial
 - Reading the with arduino over Serial
 - parsing them as necessary
