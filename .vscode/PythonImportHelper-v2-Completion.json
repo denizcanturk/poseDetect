@@ -51,12 +51,54 @@
         "documentation": {}
     },
     {
+        "label": "deque",
+        "importPath": "collections",
+        "description": "collections",
+        "isExtraImport": true,
+        "detail": "collections",
+        "documentation": {}
+    },
+    {
+        "label": "deque",
+        "importPath": "collections",
+        "description": "collections",
+        "isExtraImport": true,
+        "detail": "collections",
+        "documentation": {}
+    },
+    {
         "label": "mediapipe",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "mediapipe",
         "description": "mediapipe",
         "detail": "mediapipe",
+        "documentation": {}
+    },
+    {
+        "label": "serial",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "serial",
+        "description": "serial",
+        "detail": "serial",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "importPath": "poseLibrary",
+        "description": "poseLibrary",
+        "isExtraImport": true,
+        "detail": "poseLibrary",
         "documentation": {}
     },
     {
@@ -195,57 +237,210 @@
         "documentation": {}
     },
     {
-        "label": "mp_pose",
+        "label": "mp_drawing",
         "kind": 5,
-        "importPath": "poseDetection",
-        "description": "poseDetection",
-        "peekOfCode": "mp_pose = mp.solutions.pose\nmp_draw = mp.solutions.drawing_utils\npose = mp_pose.Pose()\n# Define landmark indices and their corresponding names\nlandmark_mapping = {\n    11: \"LEFT SHOULDER\",\n    12: \"RIGHT SHOULDER\",\n    13: \"LEFT ELBOW\",\n    14: \"RIGHT ELBOW\",\n    15: \"LEFT WRIST\",",
-        "detail": "poseDetection",
+        "importPath": "HandPoseDetect",
+        "description": "HandPoseDetect",
+        "peekOfCode": "mp_drawing = mp.solutions.drawing_utils\nmp_hands = mp.solutions.hands\nmp_pose = mp.solutions.pose\npose = mp_pose.Pose()\nlandmark_mapping = {\n    11: \"LEFT SHOULDER\",\n    12: \"RIGHT SHOULDER\",\n    13: \"LEFT ELBOW\",\n    14: \"RIGHT ELBOW\",\n    15: \"LEFT WRIST\",",
+        "detail": "HandPoseDetect",
         "documentation": {}
     },
     {
-        "label": "mp_draw",
+        "label": "mp_hands",
         "kind": 5,
-        "importPath": "poseDetection",
-        "description": "poseDetection",
-        "peekOfCode": "mp_draw = mp.solutions.drawing_utils\npose = mp_pose.Pose()\n# Define landmark indices and their corresponding names\nlandmark_mapping = {\n    11: \"LEFT SHOULDER\",\n    12: \"RIGHT SHOULDER\",\n    13: \"LEFT ELBOW\",\n    14: \"RIGHT ELBOW\",\n    15: \"LEFT WRIST\",\n    16: \"RIGHT WRIST\"",
-        "detail": "poseDetection",
+        "importPath": "HandPoseDetect",
+        "description": "HandPoseDetect",
+        "peekOfCode": "mp_hands = mp.solutions.hands\nmp_pose = mp.solutions.pose\npose = mp_pose.Pose()\nlandmark_mapping = {\n    11: \"LEFT SHOULDER\",\n    12: \"RIGHT SHOULDER\",\n    13: \"LEFT ELBOW\",\n    14: \"RIGHT ELBOW\",\n    15: \"LEFT WRIST\",\n    16: \"RIGHT WRIST\"",
+        "detail": "HandPoseDetect",
+        "documentation": {}
+    },
+    {
+        "label": "mp_pose",
+        "kind": 5,
+        "importPath": "HandPoseDetect",
+        "description": "HandPoseDetect",
+        "peekOfCode": "mp_pose = mp.solutions.pose\npose = mp_pose.Pose()\nlandmark_mapping = {\n    11: \"LEFT SHOULDER\",\n    12: \"RIGHT SHOULDER\",\n    13: \"LEFT ELBOW\",\n    14: \"RIGHT ELBOW\",\n    15: \"LEFT WRIST\",\n    16: \"RIGHT WRIST\"\n}",
+        "detail": "HandPoseDetect",
         "documentation": {}
     },
     {
         "label": "pose",
         "kind": 5,
-        "importPath": "poseDetection",
-        "description": "poseDetection",
-        "peekOfCode": "pose = mp_pose.Pose()\n# Define landmark indices and their corresponding names\nlandmark_mapping = {\n    11: \"LEFT SHOULDER\",\n    12: \"RIGHT SHOULDER\",\n    13: \"LEFT ELBOW\",\n    14: \"RIGHT ELBOW\",\n    15: \"LEFT WRIST\",\n    16: \"RIGHT WRIST\"\n}",
-        "detail": "poseDetection",
+        "importPath": "HandPoseDetect",
+        "description": "HandPoseDetect",
+        "peekOfCode": "pose = mp_pose.Pose()\nlandmark_mapping = {\n    11: \"LEFT SHOULDER\",\n    12: \"RIGHT SHOULDER\",\n    13: \"LEFT ELBOW\",\n    14: \"RIGHT ELBOW\",\n    15: \"LEFT WRIST\",\n    16: \"RIGHT WRIST\"\n}\nconnections = [",
+        "detail": "HandPoseDetect",
         "documentation": {}
     },
     {
         "label": "landmark_mapping",
         "kind": 5,
-        "importPath": "poseDetection",
-        "description": "poseDetection",
+        "importPath": "HandPoseDetect",
+        "description": "HandPoseDetect",
         "peekOfCode": "landmark_mapping = {\n    11: \"LEFT SHOULDER\",\n    12: \"RIGHT SHOULDER\",\n    13: \"LEFT ELBOW\",\n    14: \"RIGHT ELBOW\",\n    15: \"LEFT WRIST\",\n    16: \"RIGHT WRIST\"\n}\nconnections = [\n    (11, 13),  # Left shoulder to left elbow",
-        "detail": "poseDetection",
+        "detail": "HandPoseDetect",
         "documentation": {}
     },
     {
         "label": "connections",
         "kind": 5,
-        "importPath": "poseDetection",
-        "description": "poseDetection",
-        "peekOfCode": "connections = [\n    (11, 13),  # Left shoulder to left elbow\n    (13, 15),  # Left elbow to left wrist\n    (12, 14),  # Right shoulder to right elbow\n    (14, 16),  # Right elbow to right wrist\n    (11, 12)  # Left shoulder to right shoulder\n]\n# Take video input for pose detection\ncap = cv2.VideoCapture(0)  # You can put here video of your choice (\"sampleVideo.mp4\")\n# Read each frame/image from capture object",
-        "detail": "poseDetection",
+        "importPath": "HandPoseDetect",
+        "description": "HandPoseDetect",
+        "peekOfCode": "connections = [\n    (11, 13),  # Left shoulder to left elbow\n    (13, 15),  # Left elbow to left wrist\n    (12, 14),  # Right shoulder to right elbow\n    (14, 16),  # Right elbow to right wrist\n    (11, 12)   # Left shoulder to right shoulder\n]\n# For webcam input:\ncap = cv2.VideoCapture(0)\nwith mp_hands.Hands(",
+        "detail": "HandPoseDetect",
         "documentation": {}
     },
     {
         "label": "cap",
         "kind": 5,
-        "importPath": "poseDetection",
-        "description": "poseDetection",
-        "peekOfCode": "cap = cv2.VideoCapture(0)  # You can put here video of your choice (\"sampleVideo.mp4\")\n# Read each frame/image from capture object\nwhile True:\n    ret, img = cap.read()\n    # Resize image/frame so we can accommodate it on our screen\n    img = cv2.resize(img, (600, 400))\n    # Do Pose detection\n    results = pose.process(img)\n    if results is None:\n        continue",
-        "detail": "poseDetection",
+        "importPath": "HandPoseDetect",
+        "description": "HandPoseDetect",
+        "peekOfCode": "cap = cv2.VideoCapture(0)\nwith mp_hands.Hands(\n    min_detection_confidence=0.5,\n    min_tracking_confidence=0.5) as hands:\n  while cap.isOpened():\n    success, image = cap.read()\n    if not success:\n      print(\"Ignoring empty camera frame.\")\n      # If loading a video, use 'break' instead of 'continue'.\n      continue",
+        "detail": "HandPoseDetect",
+        "documentation": {}
+    },
+    {
+        "label": "mp_drawing",
+        "kind": 5,
+        "importPath": "HandTracking",
+        "description": "HandTracking",
+        "peekOfCode": "mp_drawing = mp.solutions.drawing_utils\nmp_hands = mp.solutions.hands\n# For webcam input:\ncap = cv2.VideoCapture(0)\nwith mp_hands.Hands(\n    min_detection_confidence=0.5,\n    min_tracking_confidence=0.5) as hands:\n  while cap.isOpened():\n    success, image = cap.read()\n    if not success:",
+        "detail": "HandTracking",
+        "documentation": {}
+    },
+    {
+        "label": "mp_hands",
+        "kind": 5,
+        "importPath": "HandTracking",
+        "description": "HandTracking",
+        "peekOfCode": "mp_hands = mp.solutions.hands\n# For webcam input:\ncap = cv2.VideoCapture(0)\nwith mp_hands.Hands(\n    min_detection_confidence=0.5,\n    min_tracking_confidence=0.5) as hands:\n  while cap.isOpened():\n    success, image = cap.read()\n    if not success:\n      print(\"Ignoring empty camera frame.\")",
+        "detail": "HandTracking",
+        "documentation": {}
+    },
+    {
+        "label": "cap",
+        "kind": 5,
+        "importPath": "HandTracking",
+        "description": "HandTracking",
+        "peekOfCode": "cap = cv2.VideoCapture(0)\nwith mp_hands.Hands(\n    min_detection_confidence=0.5,\n    min_tracking_confidence=0.5) as hands:\n  while cap.isOpened():\n    success, image = cap.read()\n    if not success:\n      print(\"Ignoring empty camera frame.\")\n      # If loading a video, use 'break' instead of 'continue'.\n      continue",
+        "detail": "HandTracking",
+        "documentation": {}
+    },
+    {
+        "label": "calculate_rolling_average",
+        "kind": 2,
+        "importPath": "RollinAvgOverSerial",
+        "description": "RollinAvgOverSerial",
+        "peekOfCode": "def calculate_rolling_average(new_value, window_size, rolling_values):\n    if len(rolling_values) < window_size:\n        rolling_values.append(new_value)\n    else:\n        rolling_values.popleft()\n        rolling_values.append(new_value)\n    return sum(rolling_values) / len(rolling_values)\n# Example usage\nwindow_size = 5\nrolling_values = deque(maxlen=window_size)",
+        "detail": "RollinAvgOverSerial",
+        "documentation": {}
+    },
+    {
+        "label": "window_size",
+        "kind": 5,
+        "importPath": "RollinAvgOverSerial",
+        "description": "RollinAvgOverSerial",
+        "peekOfCode": "window_size = 5\nrolling_values = deque(maxlen=window_size)\n# Serial port configuration\nserial_port = serial.Serial('COM1', 9600)  # Adjust the port and baudrate as needed\ntry:\n    while True:\n        # Simulate new angle measurement (replace with actual sensor reading)\n        angle_measurement = 30  # Replace this line with your actual angle measurement\n        # Calculate rolling average\n        rolling_avg = calculate_rolling_average(angle_measurement, window_size, rolling_values)",
+        "detail": "RollinAvgOverSerial",
+        "documentation": {}
+    },
+    {
+        "label": "rolling_values",
+        "kind": 5,
+        "importPath": "RollinAvgOverSerial",
+        "description": "RollinAvgOverSerial",
+        "peekOfCode": "rolling_values = deque(maxlen=window_size)\n# Serial port configuration\nserial_port = serial.Serial('COM1', 9600)  # Adjust the port and baudrate as needed\ntry:\n    while True:\n        # Simulate new angle measurement (replace with actual sensor reading)\n        angle_measurement = 30  # Replace this line with your actual angle measurement\n        # Calculate rolling average\n        rolling_avg = calculate_rolling_average(angle_measurement, window_size, rolling_values)\n        print(f\"New angle: {angle_measurement}, Rolling Average: {rolling_avg}\")",
+        "detail": "RollinAvgOverSerial",
+        "documentation": {}
+    },
+    {
+        "label": "serial_port",
+        "kind": 5,
+        "importPath": "RollinAvgOverSerial",
+        "description": "RollinAvgOverSerial",
+        "peekOfCode": "serial_port = serial.Serial('COM1', 9600)  # Adjust the port and baudrate as needed\ntry:\n    while True:\n        # Simulate new angle measurement (replace with actual sensor reading)\n        angle_measurement = 30  # Replace this line with your actual angle measurement\n        # Calculate rolling average\n        rolling_avg = calculate_rolling_average(angle_measurement, window_size, rolling_values)\n        print(f\"New angle: {angle_measurement}, Rolling Average: {rolling_avg}\")\n        # Send rolling average value through serial port\n        serial_port.write(f\"{rolling_avg}\\n\".encode())",
+        "detail": "RollinAvgOverSerial",
+        "documentation": {}
+    },
+    {
+        "label": "RollingAverageFilter",
+        "kind": 6,
+        "importPath": "poseLibrary",
+        "description": "poseLibrary",
+        "peekOfCode": "class RollingAverageFilter:\n    def __init__(self, window_size:int):\n        self.window_size = window_size\n        self.values = []\n    def add_value(self, value:float):\n        self.values.append(value)\n        if len(self.values) > self.window_size:\n            self.values.pop(0)\n    def get_filtered_value(self)->int:\n        if len(self.values) == 0:",
+        "detail": "poseLibrary",
+        "documentation": {}
+    },
+    {
+        "label": "PoseDetector",
+        "kind": 6,
+        "importPath": "poseLibrary",
+        "description": "poseLibrary",
+        "peekOfCode": "class PoseDetector:\n    def __init__(self, window_size:int=100):\n        self.mp_pose = mp.solutions.pose\n        self.mp_draw = mp.solutions.drawing_utils\n        self.pose = self.mp_pose.Pose()\n        self.window_size = window_size\n        self.slopeContainer = []\n        self.slope = 0\n        self.prevSlope = 0\n        self.landmark_mapping = {",
+        "detail": "poseLibrary",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "poseLibrary",
+        "description": "poseLibrary",
+        "peekOfCode": "def main():\n    # Initialize PoseDetector object\n    pose_detector = PoseDetector(window_size=10)\n    # Take video input for pose detection\n    cap = cv2.VideoCapture(0)  # You can put here video of your choice (\"sampleVideo.mp4\")\n    # Read each frame/image from capture object\n    while True:\n        ret, img = cap.read()\n        # Resize image/frame so we can accommodate it on our screen\n        img = cv2.resize(img, (640, 480))",
+        "detail": "poseLibrary",
+        "documentation": {}
+    },
+    {
+        "label": "counter",
+        "kind": 5,
+        "importPath": "poseLibrary",
+        "description": "poseLibrary",
+        "peekOfCode": "counter = 0\n#-----------------------------------------------\nclass RollingAverageFilter:\n    def __init__(self, window_size:int):\n        self.window_size = window_size\n        self.values = []\n    def add_value(self, value:float):\n        self.values.append(value)\n        if len(self.values) > self.window_size:\n            self.values.pop(0)",
+        "detail": "poseLibrary",
+        "documentation": {}
+    },
+    {
+        "label": "calculate_rolling_average",
+        "kind": 2,
+        "importPath": "rollingAvgExample",
+        "description": "rollingAvgExample",
+        "peekOfCode": "def calculate_rolling_average(new_value, window_size, rolling_values):\n    if len(rolling_values) < window_size:\n        rolling_values.append(new_value)\n    else:\n        rolling_values.popleft()\n        rolling_values.append(new_value)\n    return sum(rolling_values) / len(rolling_values)\n# Example usage\nwindow_size = 10\nrolling_values = deque(maxlen=window_size)",
+        "detail": "rollingAvgExample",
+        "documentation": {}
+    },
+    {
+        "label": "window_size",
+        "kind": 5,
+        "importPath": "rollingAvgExample",
+        "description": "rollingAvgExample",
+        "peekOfCode": "window_size = 10\nrolling_values = deque(maxlen=window_size)\n# Simulating incoming angle measurements\nangle_measurements = [30, 35, 40, 45, 50, 55, 60, 65, 70, 75]\nfor angle in angle_measurements:\n    rolling_avg = calculate_rolling_average(angle, window_size, rolling_values)\n    print(f\"New angle: {angle}, Rolling Average: {rolling_avg}\")",
+        "detail": "rollingAvgExample",
+        "documentation": {}
+    },
+    {
+        "label": "rolling_values",
+        "kind": 5,
+        "importPath": "rollingAvgExample",
+        "description": "rollingAvgExample",
+        "peekOfCode": "rolling_values = deque(maxlen=window_size)\n# Simulating incoming angle measurements\nangle_measurements = [30, 35, 40, 45, 50, 55, 60, 65, 70, 75]\nfor angle in angle_measurements:\n    rolling_avg = calculate_rolling_average(angle, window_size, rolling_values)\n    print(f\"New angle: {angle}, Rolling Average: {rolling_avg}\")",
+        "detail": "rollingAvgExample",
+        "documentation": {}
+    },
+    {
+        "label": "angle_measurements",
+        "kind": 5,
+        "importPath": "rollingAvgExample",
+        "description": "rollingAvgExample",
+        "peekOfCode": "angle_measurements = [30, 35, 40, 45, 50, 55, 60, 65, 70, 75]\nfor angle in angle_measurements:\n    rolling_avg = calculate_rolling_average(angle, window_size, rolling_values)\n    print(f\"New angle: {angle}, Rolling Average: {rolling_avg}\")",
+        "detail": "rollingAvgExample",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "kind": 5,
+        "importPath": "utf",
+        "description": "utf",
+        "peekOfCode": "path = \"c:\\golder\\locatıon\"\nprint(repr(path))",
+        "detail": "utf",
         "documentation": {}
     },
     {

@@ -88,7 +88,6 @@ class PoseDetector:
                 
                 start_x, start_y, end_x, end_y = int(start_landmark.x * img.shape[1]), int(start_landmark.y * img.shape[0]), \
                                                 int(end_landmark.x * img.shape[1]), int(end_landmark.y * img.shape[0])
-                
                 # cv2.line(img, (start_x, start_y), (end_x, end_y), (0, 255, 0), 4)
                 # slope = (end_y - start_y) / (end_x - start_x)
                 # if abs(end_x - start_x) > 5:
@@ -102,27 +101,29 @@ class PoseDetector:
                 
                 if key in self.filter_mapping:
                     cv2.line(img, (start_x, start_y), (end_x, end_y), (0, 255, 0), 4)
-                    if abs(end_x - start_x) > 5:
-                        self.slope = ((480-end_y) - (480-start_y)) / (end_x - start_x)
+                    if abs(end_x - start_x) > 2 :
+                        self.slope = ((end_y) - (start_y)) / (end_x - start_x)
                         self.prevSlope = self.slope
                     else:
                         self.slope = self.prevSlope
 
                     self.filter_mapping[key].add_value(self.slope)
                     filtered_slope = self.filter_mapping[key].get_filtered_value()
-                    print("{}\t- {}\t: sX:{}, sY:{}, eX:{}, eY:{}".format(start_landmark_name, end_landmark_name, start_x, (480-start_y), end_x, (480-end_y)).expandtabs(9))
                     self.slopeContainer.append(filtered_slope)
+                print("{}\t- {}\t: sX:{}, sY:{}, eX:{}, eY:{}".format(start_landmark_name, end_landmark_name, start_x, (start_y), end_x, (end_y)).expandtabs(9))
+            print("Slope Container Values : ")
             print("Shoulder to Shoulder Slope         :", self.slopeContainer[0])
             print("Left Shoulder to Left Elbow Slope  :", self.slopeContainer[1])
             print("Left Elbow to Left Wrist Slope     :", self.slopeContainer[2])
             print("Right Shoulder to Right Elbow Slope:", self.slopeContainer[3])
             print("Right Elbow to Right Wrist Slope   :", self.slopeContainer[4])
-            #slopeContainer 0 = Shoulder to Shoulder Slope value
-            #slopeContainer 1 = Left Shoulder to Left Elbow Slope value
-            #slopeContainer 2 = Left Elbow to Left Wrist Slope value
-            #slopeContainer 3 = Right Shoulder to Right Elbow Slope value
-            #slopeContainer 4 = Right Elbow to Right Wrist Slope value
+            # slopeContainer 0 = Shoulder to Shoulder Slope value
+            # slopeContainer 1 = Left Shoulder to Left Elbow Slope value
+            # slopeContainer 2 = Left Elbow to Left Wrist Slope value
+            # slopeContainer 3 = Right Shoulder to Right Elbow Slope value
+            # slopeContainer 4 = Right Elbow to Right Wrist Slope value
 
+            print("Calculated Radian Values : ")
             print("lSlE : ", (self.slopeContainer[0]-self.slopeContainer[1]) / (1+(self.slopeContainer[0]*self.slopeContainer[1])))
             print("lElW : ", (self.slopeContainer[1]-self.slopeContainer[2]) / (1+(self.slopeContainer[1]*self.slopeContainer[2])))
             print("rSrE : ", (self.slopeContainer[0]-self.slopeContainer[3]) / (1+(self.slopeContainer[0]*self.slopeContainer[3])))
@@ -132,7 +133,7 @@ class PoseDetector:
             lElW = np.degrees((self.slopeContainer[1]-self.slopeContainer[2]) / (1+self.slopeContainer[1]*self.slopeContainer[2]))%360
             rSrE = np.degrees((self.slopeContainer[0]-self.slopeContainer[3]) / (1+self.slopeContainer[0]*self.slopeContainer[3]))%360
             rErW = np.degrees((self.slopeContainer[3]-self.slopeContainer[4]) / (1+self.slopeContainer[3]*self.slopeContainer[4]))%360
-
+            print("Calculated Degree Values : ")
             print("Left Shoulder - Elbow  Deg:", lSlE)
             print("Left Elbow - Wrist     Deg:", lElW) # TODO : PROBLEMATIC CHECK THIS OUT
             print("Right Shoulder - Elbow Deg:", rSrE)
