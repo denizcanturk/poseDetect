@@ -76,6 +76,14 @@
         "documentation": {}
     },
     {
+        "label": "PoseDetector",
+        "importPath": "poseLibrary",
+        "description": "poseLibrary",
+        "isExtraImport": true,
+        "detail": "poseLibrary",
+        "documentation": {}
+    },
+    {
         "label": "serial",
         "kind": 6,
         "isExtraImport": true,
@@ -91,14 +99,6 @@
         "importPath": "time",
         "description": "time",
         "detail": "time",
-        "documentation": {}
-    },
-    {
-        "label": "main",
-        "importPath": "poseLibrary",
-        "description": "poseLibrary",
-        "isExtraImport": true,
-        "detail": "poseLibrary",
         "documentation": {}
     },
     {
@@ -327,6 +327,42 @@
         "documentation": {}
     },
     {
+        "label": "main",
+        "kind": 2,
+        "importPath": "poseDetection",
+        "description": "poseDetection",
+        "peekOfCode": "def main():\n    # Initialize PoseDetector object\n    pose_detector = PoseDetector(window_size=10)\n    # Take video input for pose detection\n    cap = cv2.VideoCapture(0)  # You can put here video of your choice (\"sampleVideo.mp4\")\n    # Read each frame/image from capture object\n    while True:\n        ret, img = cap.read()\n        # Resize image/frame so we can accommodate it on our screen\n        img = cv2.resize(img, (640, 480))",
+        "detail": "poseDetection",
+        "documentation": {}
+    },
+    {
+        "label": "RollingAverageFilter",
+        "kind": 6,
+        "importPath": "poseLibrary",
+        "description": "poseLibrary",
+        "peekOfCode": "class RollingAverageFilter:\n    def __init__(self, window_size:int):\n        self.window_size = window_size\n        self.values = []\n    def add_value(self, value:float):\n        self.values.append(value)\n        if len(self.values) > self.window_size:\n            self.values.pop(0)\n    def get_filtered_value(self)->int:\n        if len(self.values) == 0:",
+        "detail": "poseLibrary",
+        "documentation": {}
+    },
+    {
+        "label": "PoseDetector",
+        "kind": 6,
+        "importPath": "poseLibrary",
+        "description": "poseLibrary",
+        "peekOfCode": "class PoseDetector:\n    def __init__(self, window_size:int=100):\n        self.mp_pose = mp.solutions.pose\n        self.mp_draw = mp.solutions.drawing_utils\n        self.pose = self.mp_pose.Pose()\n        self.window_size = window_size\n        self.slopeContainer = []\n        self.slope = 0\n        self.prevSlope = 0\n        self.landmark_mapping = {",
+        "detail": "poseLibrary",
+        "documentation": {}
+    },
+    {
+        "label": "counter",
+        "kind": 5,
+        "importPath": "poseLibrary",
+        "description": "poseLibrary",
+        "peekOfCode": "counter = 0\n#-----------------------------------------------\nclass RollingAverageFilter:\n    def __init__(self, window_size:int):\n        self.window_size = window_size\n        self.values = []\n    def add_value(self, value:float):\n        self.values.append(value)\n        if len(self.values) > self.window_size:\n            self.values.pop(0)",
+        "detail": "poseLibrary",
+        "documentation": {}
+    },
+    {
         "label": "calculate_rolling_average",
         "kind": 2,
         "importPath": "RollinAvgOverSerial",
@@ -360,42 +396,6 @@
         "description": "RollinAvgOverSerial",
         "peekOfCode": "serial_port = serial.Serial('COM1', 9600)  # Adjust the port and baudrate as needed\ntry:\n    while True:\n        # Simulate new angle measurement (replace with actual sensor reading)\n        angle_measurement = 30  # Replace this line with your actual angle measurement\n        # Calculate rolling average\n        rolling_avg = calculate_rolling_average(angle_measurement, window_size, rolling_values)\n        print(f\"New angle: {angle_measurement}, Rolling Average: {rolling_avg}\")\n        # Send rolling average value through serial port\n        serial_port.write(f\"{rolling_avg}\\n\".encode())",
         "detail": "RollinAvgOverSerial",
-        "documentation": {}
-    },
-    {
-        "label": "RollingAverageFilter",
-        "kind": 6,
-        "importPath": "poseLibrary",
-        "description": "poseLibrary",
-        "peekOfCode": "class RollingAverageFilter:\n    def __init__(self, window_size:int):\n        self.window_size = window_size\n        self.values = []\n    def add_value(self, value:float):\n        self.values.append(value)\n        if len(self.values) > self.window_size:\n            self.values.pop(0)\n    def get_filtered_value(self)->int:\n        if len(self.values) == 0:",
-        "detail": "poseLibrary",
-        "documentation": {}
-    },
-    {
-        "label": "PoseDetector",
-        "kind": 6,
-        "importPath": "poseLibrary",
-        "description": "poseLibrary",
-        "peekOfCode": "class PoseDetector:\n    def __init__(self, window_size:int=100):\n        self.mp_pose = mp.solutions.pose\n        self.mp_draw = mp.solutions.drawing_utils\n        self.pose = self.mp_pose.Pose()\n        self.window_size = window_size\n        self.slopeContainer = []\n        self.slope = 0\n        self.prevSlope = 0\n        self.landmark_mapping = {",
-        "detail": "poseLibrary",
-        "documentation": {}
-    },
-    {
-        "label": "main",
-        "kind": 2,
-        "importPath": "poseLibrary",
-        "description": "poseLibrary",
-        "peekOfCode": "def main():\n    # Initialize PoseDetector object\n    pose_detector = PoseDetector(window_size=10)\n    # Take video input for pose detection\n    cap = cv2.VideoCapture(0)  # You can put here video of your choice (\"sampleVideo.mp4\")\n    # Read each frame/image from capture object\n    while True:\n        ret, img = cap.read()\n        # Resize image/frame so we can accommodate it on our screen\n        img = cv2.resize(img, (640, 480))",
-        "detail": "poseLibrary",
-        "documentation": {}
-    },
-    {
-        "label": "counter",
-        "kind": 5,
-        "importPath": "poseLibrary",
-        "description": "poseLibrary",
-        "peekOfCode": "counter = 0\n#-----------------------------------------------\nclass RollingAverageFilter:\n    def __init__(self, window_size:int):\n        self.window_size = window_size\n        self.values = []\n    def add_value(self, value:float):\n        self.values.append(value)\n        if len(self.values) > self.window_size:\n            self.values.pop(0)",
-        "detail": "poseLibrary",
         "documentation": {}
     },
     {

@@ -1,1 +1,11 @@
 __pycache__/
+.env/
+*.mp4
+*.jpeg
+*.jpg
+*.png
+*.gif
+*.bmp
+*.tiff
+*.webp
+.vscode/

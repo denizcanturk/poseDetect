@@ -1,6 +1,13 @@
+from tracemalloc import start
 import cv2
 import mediapipe as mp
 import numpy as np
+import math
+import matplotlib.pyplot as plt
+
+
+
+imageProc = False
 counter = 0
 #-----------------------------------------------
 
@@ -27,9 +34,8 @@ class PoseDetector:
         self.mp_draw = mp.solutions.drawing_utils
         self.pose = self.mp_pose.Pose()
         self.window_size = window_size
-        self.slopeContainer = []
-        self.slope = 0
-        self.prevSlope = 0
+        self.angleContainertoSend = []
+
         self.landmark_mapping = {
             11: "LEFT SHOULDER",
             12: "RIGHT SHOULDER",
@@ -40,28 +46,20 @@ class PoseDetector:
         }
         self.connections = [
             (11, 12),  # Left shoulder to right shoulder
-            (11, 13),  # Left shoulder to left elbow
+            (13, 11),  # Left shoulder to left elbow
             (13, 15),  # Left elbow to left wrist
-            (12, 14),  # Right shoulder to right elbow
+            (14, 12),  # Right shoulder to right elbow
             (14, 16)   # Right elbow to right wrist
         ]
-        self.lineContainer = {}
-        self.leftShoulderToElbowMvgAvg = RollingAverageFilter(window_size)
-        self.leftElbowToWristMvgAvg = RollingAverageFilter(window_size)
-        self.rightShoulderToElbowMvgAvg = RollingAverageFilter(window_size)
-        self.righttElbowToWristMvgAvg = RollingAverageFilter(window_size)
-        self.shoulderToShoulderMvgAvg = RollingAverageFilter(window_size)
-
-        self.filter_mapping = {
-            ("LEFT SHOULDER", "LEFT ELBOW"): self.leftShoulderToElbowMvgAvg,
-            ("LEFT ELBOW", "LEFT WRIST"): self.leftElbowToWristMvgAvg,
-            ("RIGHT SHOULDER", "RIGHT ELBOW"): self.rightShoulderToElbowMvgAvg,
-            ("RIGHT ELBOW", "RIGHT WRIST"): self.righttElbowToWristMvgAvg,
-            ("LEFT SHOULDER", "RIGHT SHOULDER"): self.shoulderToShoulderMvgAvg
-        }
+        self.angleContainer = [
+            (14,12,16), # right shoulder to right wrist
+            (12,14,11), # right elbow to right shoulder
+            (11,12,13), # left shoulder to left elbow
+            (13,11,15) # left elbow to left wrist
+        ]
     
     def process_frame(self, img):
-        self.slopeContainer.clear()
+        self.angleContainertoSend.clear()
         # Do pose detection
         results = self.pose.process(img)
         if results is None:
@@ -69,15 +67,13 @@ class PoseDetector:
 
         # Draw landmarks and connections
         try:
-            #TODO Elbow-Wrist angles change with the shoulder - elbow angle change. need a
-            # wat to fix that issue... 
-            #Putting Landmark with red circles
+
             for landmark_idx, _ in self.landmark_mapping.items():
                 landmark = results.pose_landmarks.landmark[landmark_idx]
                 x = int(landmark.x * img.shape[1])
                 y = int(landmark.y * img.shape[0])
-                cv2.circle(img, (x, y), 6, (0, 0, 255), 6)
-            print("--- Cycle Start Point ---")
+                cv2.circle(img, (x, y), 4, (0, 0, 255), 5)
+                cv2.putText(img, str(landmark_idx), (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5 , (255, 0, 0), 2)
 
             #Drawing lines for each connections
             for connection in self.connections:
@@ -86,94 +82,136 @@ class PoseDetector:
                 start_landmark_name = self.landmark_mapping.get(connection[0])
                 end_landmark_name = self.landmark_mapping.get(connection[1])
                 
-                start_x, start_y, end_x, end_y = int(start_landmark.x * img.shape[1]), int(start_landmark.y * img.shape[0]), \
-                                                int(end_landmark.x * img.shape[1]), int(end_landmark.y * img.shape[0])
-                # cv2.line(img, (start_x, start_y), (end_x, end_y), (0, 255, 0), 4)
-                # slope = (end_y - start_y) / (end_x - start_x)
-                # if abs(end_x - start_x) > 5:
-                #     slope = (end_y - start_y) / (end_x - start_x)
-                #     prevSlope = slope
-                # else:
-                #     slope = prevSlope
-                
-                    # Apply rolling average filter to joint angles based on landmark names
-                key = (start_landmark_name, end_landmark_name)
-                
-                if key in self.filter_mapping:
-                    cv2.line(img, (start_x, start_y), (end_x, end_y), (0, 255, 0), 4)
-                    if abs(end_x - start_x) > 2 :
-                        self.slope = ((end_y) - (start_y)) / (end_x - start_x)
-                        self.prevSlope = self.slope
-                    else:
-                        self.slope = self.prevSlope
+                start_x, start_y, start_z = int(start_landmark.x * img.shape[1]), int(start_landmark.y * img.shape[0]), start_landmark.z
+                end_x, end_y, end_z = int(end_landmark.x * img.shape[1]), int(end_landmark.y * img.shape[0]), end_landmark.z
+                cv2.line(img, (start_x, start_y), (end_x, end_y), (0, 255, 0), 4)
+  
+                # print("{}\t- {}\t: sX:{}, sY:{}, sZ:{}, eX:{}, eY:{}, eZ:{}".format(start_landmark_name, end_landmark_name, start_x, start_y, start_z, end_x, end_y, end_z).expandtabs(9))
 
-                    self.filter_mapping[key].add_value(self.slope)
-                    filtered_slope = self.filter_mapping[key].get_filtered_value()
-                    self.slopeContainer.append(filtered_slope)
-                print("{}\t- {}\t: sX:{}, sY:{}, eX:{}, eY:{}".format(start_landmark_name, end_landmark_name, start_x, (start_y), end_x, (end_y)).expandtabs(9))
-            print("Slope Container Values : ")
-            print("Shoulder to Shoulder Slope         :", self.slopeContainer[0])
-            print("Left Shoulder to Left Elbow Slope  :", self.slopeContainer[1])
-            print("Left Elbow to Left Wrist Slope     :", self.slopeContainer[2])
-            print("Right Shoulder to Right Elbow Slope:", self.slopeContainer[3])
-            print("Right Elbow to Right Wrist Slope   :", self.slopeContainer[4])
-            # slopeContainer 0 = Shoulder to Shoulder Slope value
-            # slopeContainer 1 = Left Shoulder to Left Elbow Slope value
-            # slopeContainer 2 = Left Elbow to Left Wrist Slope value
-            # slopeContainer 3 = Right Shoulder to Right Elbow Slope value
-            # slopeContainer 4 = Right Elbow to Right Wrist Slope value
+            # Calculate angles using the calculate_angle_3d function
+            for angle_points in self.angleContainer:
+                point1 = results.pose_landmarks.landmark[angle_points[0]]
+                point2 = results.pose_landmarks.landmark[angle_points[1]]
+                point3 = results.pose_landmarks.landmark[angle_points[2]]
 
-            print("Calculated Radian Values : ")
-            print("lSlE : ", (self.slopeContainer[0]-self.slopeContainer[1]) / (1+(self.slopeContainer[0]*self.slopeContainer[1])))
-            print("lElW : ", (self.slopeContainer[1]-self.slopeContainer[2]) / (1+(self.slopeContainer[1]*self.slopeContainer[2])))
-            print("rSrE : ", (self.slopeContainer[0]-self.slopeContainer[3]) / (1+(self.slopeContainer[0]*self.slopeContainer[3])))
-            print("rErW : ", (self.slopeContainer[3]-self.slopeContainer[4]) / (1+(self.slopeContainer[3]*self.slopeContainer[4])))
+                angle = self.calculate_angle_3d(point1.x, point1.y, point1.z, point2.x, point2.y, point2.z, point3.x, point3.y, point3.z)
+                angle2d = self.find_angle2d(point1.x, point1.y, point2.x, point2.y, point3.x, point3.y)
+                # print(f"3D Angle between points {angle_points}: {angle} degrees")
+                # print(f"2D Angle between points {angle_points}: {angle2d} degrees")
 
-            lSlE = np.degrees((self.slopeContainer[0]-self.slopeContainer[1]) / (1+self.slopeContainer[0]*self.slopeContainer[1]))%360
-            lElW = np.degrees((self.slopeContainer[1]-self.slopeContainer[2]) / (1+self.slopeContainer[1]*self.slopeContainer[2]))%360
-            rSrE = np.degrees((self.slopeContainer[0]-self.slopeContainer[3]) / (1+self.slopeContainer[0]*self.slopeContainer[3]))%360
-            rErW = np.degrees((self.slopeContainer[3]-self.slopeContainer[4]) / (1+self.slopeContainer[3]*self.slopeContainer[4]))%360
-            print("Calculated Degree Values : ")
-            print("Left Shoulder - Elbow  Deg:", lSlE)
-            print("Left Elbow - Wrist     Deg:", lElW) # TODO : PROBLEMATIC CHECK THIS OUT
-            print("Right Shoulder - Elbow Deg:", rSrE)
-            print("Right Elbow - Shoulder Deg:", rErW) # TODO : PROBLEMATIC CHECK THIS OUT
-            print("--- Cycle End Point ---")
+                self.angleContainertoSend.append(round(angle2d))
+
         except Exception as e:
             print(str(e))
-        print()
 
         return img
+    
+    def stringify_angles(self)->str:
+        # right shoulder to right wrist
+        # right elbow to right shoulder
+        # left shoulder to left elbow
+        # left elbow to left wrist  
+        result = ",".join(map(str, self.angleContainertoSend))
+        return result
+
+    def find_angle2d(self, x1, y1, x2, y2, x3, y3):
+        # Vector u
+        ux, uy = x2 - x1, y2 - y1
+        # Vector v
+        vx, vy = x3 - x1, y3 - y1
+        
+        # Dot product
+        dot_product = ux * vx + uy * vy
+        # Magnitudes
+        magnitude_u = math.sqrt(ux**2 + uy**2)
+        magnitude_v = math.sqrt(vx**2 + vy**2)
+        
+        # Cosine of the angle
+        cos_theta = dot_product / (magnitude_u * magnitude_v)
+        
+        # Angle in radians
+        theta_radians = math.acos(cos_theta)
+        
+        # Convert to degrees
+        theta_degrees = math.degrees(theta_radians)
+        
+        return theta_degrees
+
+    def calculate_angle_3d(self, x1, y1, z1, x2, y2, z2, x3, y3, z3):
+        # Calculate vectors between the points
+        vec1 = np.array([x1 - x2, y1 - y2, z1 - z2])
+        vec2 = np.array([x3 - x2, y3 - y2, z3 - z2])
+
+        # Calculate the dot product of the two vectors
+        dot_product = np.dot(vec1, vec2)
+
+        # Calculate the magnitudes of the vectors
+        mag1 = np.linalg.norm(vec1)
+        mag2 = np.linalg.norm(vec2)
+
+        # Calculate the cosine of the angle between the vectors
+        cos_angle = dot_product / (mag1 * mag2)
+
+        # Calculate the angle in radians
+        angle_radians = np.arccos(cos_angle)
+
+        # Convert the angle to degrees
+        angle_degrees = np.degrees(angle_radians)
+        # print(f"The angle is {angle_degrees:.2f} degrees")
+        return angle_degrees
+
+    def calculate_angle_3d2(self, x1, y1, z1, x2, y2, z2, x3, y3, z3):
+        # Vector u: Point 1 to Point 2
+        ux, uy, uz = x2 - x1, y2 - y1, z2 - z1
+        # Vector v: Point 1 to Point 3
+        vx, vy, vz = x3 - x1, y3 - y1, z3 - z1
+        
+        # Dot product
+        dot_product = ux * vx + uy * vy + uz * vz
+        # Magnitudes
+        magnitude_u = math.sqrt(ux**2 + uy**2 + uz**2)
+        magnitude_v = math.sqrt(vx**2 + vy**2 + vz**2)
+        
+        # Calculate cos(theta)
+        cos_theta = dot_product / (magnitude_u * magnitude_v)
+        
+        # Handle numerical issues (rounding errors can push cos_theta slightly out of range)
+        cos_theta = max(min(cos_theta, 1.0), -1.0)
+    
+    # Angle in radians
+        theta_radians = math.acos(cos_theta)
+        
+        # Convert to degrees
+        theta_degrees = math.degrees(theta_radians)
+        # print(f"The angle is {theta_degrees:.2f} degrees")
+        return theta_degrees
+
+    def plot_landmark_values(self):
+        # Data for plotting
+        labels = self.labels
+        x = self.x
+        y = self.y
+        z = self.z
+
+        # Plotting x, y, and z values for start and end landmarks with lines connecting consecutive points
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d')
+
+        # Plot points
+        ax.scatter(x, y, z, c='r', marker='o')
+
+        # Connect consecutive points with lines
+        for i in range(len(x) - 1):
+            ax.plot(x[i:i+2], y[i:i+2], z[i:i+2], marker='o')
+
+        # Set labels
+        ax.set_xlabel('X')
+        ax.set_ylabel('Y')
+        ax.set_zlabel('Z')
+
+        plt.show()
 
 # Example usage:
-def main():
-    # Initialize PoseDetector object
-    pose_detector = PoseDetector(window_size=10)
-
-    # Take video input for pose detection
-    cap = cv2.VideoCapture(0)  # You can put here video of your choice ("sampleVideo.mp4")
-
-    # Read each frame/image from capture object
-    while True:
-        ret, img = cap.read()
-        # Resize image/frame so we can accommodate it on our screen
-        img = cv2.resize(img, (640, 480))
-
-        # Process frame
-        processed_img = pose_detector.process_frame(img)
-
-        # Display pose on original video/live stream
-        cv2.imshow("Pose Estimation", processed_img)
-        # if counter >=300:
-        #     break
-        # counter +=1
-        # Exit loop if any key is pressed
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-
-    # Release video capture and close all windows
-    cap.release()
-    cv2.destroyAllWindows()
 
 if __name__ == "__main__":
-    main()
+    print("This file is not intented for direct run!...")

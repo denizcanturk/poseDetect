@@ -1,7 +1,13 @@
 + condition for detecting angle for each connection
 + Calculating them seperately
-- Angles have some issues like elbow angle is moving with the change in the shoulder angle. need to way to neutralize the angle change.
-- sending them over Serial
-- Reading the with arduino over Serial
++ Angles have some issues like elbow angle is moving with the change in the shoulder angle. need to way to neutralize the angle change.
+- Need to cover all the joints and their angles
++ sending them over UDP
+x Reading the with arduino over Serial
+- Reading the data from ESP32
 - parsing them as necessary
--
+- Moving the arm according to the angles
+- need to check the accuracy of the angles
+- need to check the delay in the movement
+- need to check the smoothness in the movement
+- need to check the range of the movement
